@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Burger</string>
+    <string name="login">Login</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="siguenos">Siguenos en nuestras redes sociales</string>
+
+</resources>
