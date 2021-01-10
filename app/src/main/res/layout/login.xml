@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Login"
     android:paddingLeft="25dp"
     android:paddingRight="25dp"
     android:background="@color/light_gray">
@@ -15,7 +15,6 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="33dp"
         android:src="@drawable/logo"
         app2:layout_constraintEnd_toEndOf="parent"
         app2:layout_constraintStart_toStartOf="parent"
@@ -26,15 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app2:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <Button
+            android:id="@+id/btnLabelLogin"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:text="@string/login"
+            android:layout_height="50dp"
             android:background="@color/white"
+            android:text="@string/login"
             android:textColor="@color/dark_blue"
             android:textSize="20dp" />
 
@@ -44,11 +44,12 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/btnLabelCreate"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="180dp"
-            android:layout_height="60dp"
-            android:text="@string/crear_cuenta"
+            android:layout_height="50dp"
             android:background="@color/orange"
+            android:text="@string/crear_cuenta"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
@@ -58,7 +59,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="vertical"
         app2:layout_constraintEnd_toEndOf="parent"
@@ -66,23 +67,68 @@
         app2:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <EditText
+            android:id="@+id/editUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textColorHint="@color/dark_blue"
-            android:hint="@string/usuario" />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/usuario"
+            android:textColorHint="@color/dark_blue" />
 
         <EditText
+            android:id="@+id/editMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/correo"
             android:textColorHint="@color/dark_blue"
-            android:hint="@string/contrasena" />
+            android:visibility="gone"/>
+
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/contrasena"
+            android:textColorHint="@color/dark_blue" />
+
+        <EditText
+            android:id="@+id/editRepassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/re_contrasena"
+            android:textColorHint="@color/dark_blue"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/textPolitics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/dark_blue"
+            android:text="@string/politicas"
+            android:visibility="gone"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnLogin"
             android:layout_width="220dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
             android:layout_marginBottom="20dp"
@@ -90,6 +136,18 @@
             android:textColor="@color/white"
             android:text="@string/iniciar_sesion"
             android:textSize="20dp" />
+        <Button
+            android:id="@+id/btnCreate"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/orange"
+            android:textColor="@color/white"
+            android:text="@string/crear_cuenta"
+            android:textSize="20dp"
+            android:visibility="gone"/>
 
 
     </LinearLayout>
@@ -99,7 +157,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app2:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         tools:layout_editor_absoluteX="25dp">
 
@@ -124,7 +182,7 @@
         android:layout_marginRight="70dp">
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/ibtnface"
             android:layout_width="50dp"
             android:layout_height="70dp"
             android:layout_weight="1"
@@ -133,7 +191,7 @@
             app2:srcCompat="@drawable/facebook" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/ibtnInsta"
             android:layout_width="50dp"
             android:layout_height="70dp"
             android:layout_weight="1"

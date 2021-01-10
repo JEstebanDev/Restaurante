@@ -3,8 +3,11 @@
     <string name="login">Login</string>
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="usuario">Usuario</string>
+    <string name="correo">Correo</string>
     <string name="contrasena">Contraseña</string>
+    <string name="re_contrasena">Repetir Contraseña</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="siguenos">Siguenos en nuestras redes sociales</string>
+    <string name="politicas">Al crear una cuenta, aceptas nuestras políticas de privacidad</string>
 
 </resources>
