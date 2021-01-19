@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Burger</string>
+
     <string name="login">Login</string>
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="usuario">Usuario</string>
@@ -9,5 +10,12 @@
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="siguenos">Siguenos en nuestras redes sociales</string>
     <string name="politicas">Al crear una cuenta, aceptas nuestras políticas de privacidad</string>
+
+    <string name="tienes_hambre">¿Tienes hambre?</string>
+    <string name="tienes_hambre_descripcion">Estos son los platillos mas populares</string>
+    <string name="tus_platillos_preferidos">¡Tus platillos preferidos!</string>
+    <string name="lo_quiero">¡Lo Quiero!</string>
+
+
 
 </resources>
