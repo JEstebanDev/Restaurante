@@ -50,7 +50,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/recycler_home2">
+            android:id="@+id/recycler_fav">
 
         </androidx.recyclerview.widget.RecyclerView>
 

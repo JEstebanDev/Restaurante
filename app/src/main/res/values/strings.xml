@@ -17,5 +17,12 @@
     <string name="lo_quiero">¡Lo Quiero!</string>
 
 
+    <!-- Mensajes de error-->
+
+    <string name="Correo_no_valido">Correo no valido</string>
+    <string name="Rellena_todos_los_campos">Rellena todos los campos</string>
+    <string name="Las_contraseñas_no_coinciden">Las contraseñas no coinciden</string>
+
+
 
 </resources>

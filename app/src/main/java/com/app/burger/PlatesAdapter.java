@@ -15,9 +15,13 @@ import java.util.ArrayList;
 
 public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder> {
     ArrayList<Plates> arrayPlates;
+    int heigh,width;
 
-    public PlatesAdapter(ArrayList<Plates> arrayPlates) {
+    public PlatesAdapter(ArrayList<Plates> arrayPlates,int heigh,int width) {
         this.arrayPlates = arrayPlates;
+        this.heigh=heigh;
+        this.width=width;
+
     }
 
     @NonNull
@@ -30,8 +34,7 @@ public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull PlatesAdapter.ViewHolder holder, int position) {
 
-
-        Picasso.get().load(arrayPlates.get(position).getImage()).resize(850,400).centerCrop().into(holder.ivimageView);
+        Picasso.get().load(arrayPlates.get(position).getImage()).resize(heigh,width).centerCrop().into(holder.ivimageView);
         holder.textVname.setText(arrayPlates.get(position).getName());
         holder.textVprice.setText("$ "+arrayPlates.get(position).getPrice());
     }
