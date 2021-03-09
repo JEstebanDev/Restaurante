@@ -1,7 +1,6 @@
 package com.app.burger;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,30 +12,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
-
-    private EditText editUser, editPassword;
+public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
+    private TextView textPolitics;
+    private EditText editUser, editMail, editPassword, editRepassword;
+    private Button btnLabelLogin, btnCreate;
     private FirebaseAuth mAuth;
     private FirebaseFirestore databaseReference;
 
@@ -44,16 +35,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.create_account);
 
+        textPolitics = findViewById(R.id.textPolitics);
         editUser = findViewById(R.id.editUser);
+        editMail = findViewById(R.id.editMail);
         editPassword = findViewById(R.id.editPassword);
+        editRepassword = findViewById(R.id.editRepassword);
 
-        Button btnLabelCreate = findViewById(R.id.btnLabelCreate);
-        Button btnLogin = findViewById(R.id.btnLogin);
+        btnLabelLogin = findViewById(R.id.btnLabelLogin);
+        btnCreate = findViewById(R.id.btnCreate);
 
-        btnLabelCreate.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
+        btnLabelLogin.setOnClickListener(this);
+        btnCreate.setOnClickListener(this);
 
         // ...
         // Initialize Firebase
@@ -63,24 +57,44 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private boolean validation() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
         String strUser = editUser.getText().toString().trim();
+        String strMail = editMail.getText().toString().trim();
         String strPassword = editPassword.getText().toString().trim();
+        String strRepassword = editRepassword.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(strUser) && !TextUtils.isEmpty(strPassword)) {
-            return true;
-        }else{
-        builder.setTitle("Ups!");
+        if (!TextUtils.isEmpty(strUser) && !TextUtils.isEmpty(strMail)
+                && !TextUtils.isEmpty(strPassword) && !TextUtils.isEmpty(strRepassword)) {
+            if (isValidMail(strMail)) {
+                if (strPassword != strRepassword) {
+                    if (isValidPassword(strPassword)) {
+                        return  true;
+                    }
+                }else{
+                    builder.setTitle("Ups!");
 
-        builder.setMessage("Llena todos los campos")
-                .setCancelable(false)
-                .setPositiveButton("OK", (dialog, id) -> {
-                    // TODO: handle the OK
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                    builder.setMessage("Las contraseñas no coinciden")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", (dialog, id) -> {
+                                // TODO: handle the OK
+                            })
+                            .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    return false;
+                }
+            }else{
+                Log.d("Mensaje", "Correo no valido");
+
                 return false;
+            }
+        }else{
+            Log.d("Mensaje", "Rellena todos los campos");
+            return false;
         }
+
+        return false;
     }
 
     public void createUser( String  strUser,String strMail){
@@ -98,6 +112,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     .addOnFailureListener(e -> Log.w("Error", "Error writing document", e));
         }
     }
+
+    public static boolean isValidPassword(String strPassword) {
+        Pattern PASSWORD_PATTERN
+                = Pattern.compile(
+                "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
+
+        return !TextUtils.isEmpty(strPassword) && PASSWORD_PATTERN.matcher(strPassword).matches();
+    }
+
+    private boolean isValidMail(CharSequence csMail) {
+        return (!TextUtils.isEmpty(csMail) && Patterns.EMAIL_ADDRESS.matcher(csMail).matches());
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -113,33 +139,35 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         String strUser = editUser.getText().toString().trim();
+        String strMail = editMail.getText().toString().trim();
         String strPassword = editPassword.getText().toString().trim();
         switch (v.getId()) {
-            case R.id.btnLabelCreate:
-                startActivity(new Intent(Login.this, CreateAccount.class));
+            case R.id.btnLabelLogin:
+                startActivity(new Intent(CreateAccount.this, Login.class));
                 finish();
                 break;
-
-            case R.id.btnLogin:
-                    //POR AHORA juanes@este.com 123qweasd falta validar antes de presionar el boton
-                    mAuth.signInWithEmailAndPassword("juanes@este.com", "123qweasd")
+            case R.id.btnCreate:
+                if (validation()){
+                    mAuth.createUserWithEmailAndPassword(strMail, strPassword)
                             .addOnCompleteListener(this, task -> {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    Log.d("Mensaje","signInWithEmail:success");
+                                    Log.d("Mensaje", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(Login.this, Home.class);
-                                    intent.putExtra("idUser",strUser);
-                                    startActivity(intent);
+                                    createUser(strUser,strMail);
+                                    startActivity(new Intent(CreateAccount.this, Home.class));
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.w("Mensaje", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(Login.this, "Authentication failed.",
+                                    Log.w("Mensaje", "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(CreateAccount.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
+
+                                // ...
                             });
                     break;
+                }
         }
     }
 }

@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:src="@drawable/logo"
         app2:layout_constraintEnd_toEndOf="parent"
         app2:layout_constraintStart_toStartOf="parent"
@@ -78,19 +78,9 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/karlaregular"
             android:hint="@string/usuario"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
             android:textColorHint="@color/dark_blue" />
-
-        <EditText
-            android:id="@+id/editMail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/karlaregular"
-            android:hint="@string/correo"
-            android:textColorHint="@color/dark_blue"
-            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/editPassword"
@@ -103,34 +93,10 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/karlaregular"
             android:hint="@string/contrasena"
+            android:imeOptions="actionDone"
             android:textColorHint="@color/dark_blue" />
 
-        <EditText
-            android:id="@+id/editRepassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/"
-            android:hint="@string/re_contrasena"
-            android:textColorHint="@color/dark_blue"
-            android:visibility="gone"/>
-        <TextView
-            android:id="@+id/textPolitics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="16dp"
-            android:textColor="@color/dark_blue"
-            android:fontFamily="@font/karlaregular"
-            android:text="@string/politicas"
-            android:visibility="gone"/>
+
 
         <Button
             android:id="@+id/btnLogin"
@@ -144,20 +110,6 @@
             android:fontFamily="@font/robotomedium"
             android:text="@string/iniciar_sesion"
             android:textSize="20dp" />
-        <Button
-            android:id="@+id/btnCreate"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/orange"
-            android:textColor="@color/white"
-            android:fontFamily="@font/robotomedium"
-            android:text="@string/crear_cuenta"
-            android:textSize="20dp"
-            android:visibility="gone"/>
-
 
     </LinearLayout>
 
