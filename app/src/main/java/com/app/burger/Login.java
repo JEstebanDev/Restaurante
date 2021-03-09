@@ -129,7 +129,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     Log.d("Mensaje","signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Intent intent = new Intent(Login.this, Home.class);
-                                    intent.putExtra("idUser",strUser);
+                                    //Esto temporalmente estara asi para velocidad
+                                   // intent.putExtra("idUser",strUser);
+                                    intent.putExtra("idUser","juanes@este.com");
                                     startActivity(intent);
                                     finish();
                                 } else {

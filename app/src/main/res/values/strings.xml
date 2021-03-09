@@ -23,6 +23,13 @@
     <string name="Rellena_todos_los_campos">Rellena todos los campos</string>
     <string name="Las_contraseñas_no_coinciden">Las contraseñas no coinciden</string>
 
+    <!-- menu -->
+    <string name="menu_home">Home</string>
+    <string name="menu_menu">Menú</string>
+    <string name="menu_pedido">Pedido</string>
+    <string name="menu_factura">Factura</string>
+    <string name="menu_perfil">Perfil</string>
+
 
 
 </resources>
