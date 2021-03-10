@@ -19,32 +19,27 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
-    private TextView textPolitics;
     private EditText editUser, editMail, editPassword, editRepassword;
-    private Button btnLabelLogin, btnCreate;
     private FirebaseAuth mAuth;
     private FirebaseFirestore databaseReference;
-
-    private ArrayList<String> dataUsers;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account);
 
-        textPolitics = findViewById(R.id.textPolitics);
+        TextView textPolitics = findViewById(R.id.textPolitics);
         editUser = findViewById(R.id.editUser);
         editMail = findViewById(R.id.editMail);
         editPassword = findViewById(R.id.editPassword);
         editRepassword = findViewById(R.id.editRepassword);
 
-        btnLabelLogin = findViewById(R.id.btnLabelLogin);
-        btnCreate = findViewById(R.id.btnCreate);
+        Button btnLabelLogin = findViewById(R.id.btnLabelLogin);
+        Button btnCreate = findViewById(R.id.btnCreate);
 
         btnLabelLogin.setOnClickListener(this);
         btnCreate.setOnClickListener(this);
@@ -67,10 +62,8 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         if (!TextUtils.isEmpty(strUser) && !TextUtils.isEmpty(strMail)
                 && !TextUtils.isEmpty(strPassword) && !TextUtils.isEmpty(strRepassword)) {
             if (isValidMail(strMail)) {
-                if (strPassword != strRepassword) {
-                    if (isValidPassword(strPassword)) {
-                        return  true;
-                    }
+                if (strPassword.equals(strRepassword)) {
+                    return isValidPassword(strPassword);
                 }else{
                     builder.setTitle("Ups!");
 
@@ -93,8 +86,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
             Log.d("Mensaje", "Rellena todos los campos");
             return false;
         }
-
-        return false;
     }
 
     public void createUser( String  strUser,String strMail){
@@ -116,7 +107,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     public static boolean isValidPassword(String strPassword) {
         Pattern PASSWORD_PATTERN
                 = Pattern.compile(
-                "[a-zA-Z0-9\\!\\@\\#\\$]{8,24}");
+                "[a-zA-Z0-9!@#$]{8,24}");
 
         return !TextUtils.isEmpty(strPassword) && PASSWORD_PATTERN.matcher(strPassword).matches();
     }
@@ -154,8 +145,11 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("Mensaje", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    createUser(strUser,strMail);
-                                    startActivity(new Intent(CreateAccount.this, Home.class));
+                                    Intent intent = new Intent(CreateAccount.this, Home.class);
+                                    //Esto temporalmente estara asi para velocidad
+                                    // intent.putExtra("idUser",strUser);
+                                    intent.putExtra("idUser",user.getEmail());
+                                    startActivity(intent);
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.

@@ -38,9 +38,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editUser, editPassword;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore databaseReference;
 
-    private ArrayList<String> dataUsers;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +56,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
-        databaseReference= FirebaseFirestore.getInstance();
     }
 
     private boolean validation() {
@@ -82,22 +79,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 return false;
         }
     }
-
-    public void createUser( String  strUser,String strMail){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            Map<String, Object> users = new HashMap<>();
-            users.put("name", strUser);
-            users.put("points", 0);
-            users.put("state", "active");
-
-            databaseReference.collection("users").document(strMail)
-                    .set(users)
-                    .addOnSuccessListener(aVoid -> Log.d("Mensaje", "DocumentSnapshot successfully written!"))
-                    .addOnFailureListener(e -> Log.w("Error", "Error writing document", e));
-        }
-    }
     @Override
     public void onStart() {
         super.onStart();
@@ -112,8 +93,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        String strUser = editUser.getText().toString().trim();
-        String strPassword = editPassword.getText().toString().trim();
         switch (v.getId()) {
             case R.id.btnLabelCreate:
                 startActivity(new Intent(Login.this, CreateAccount.class));
@@ -131,7 +110,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                     Intent intent = new Intent(Login.this, Home.class);
                                     //Esto temporalmente estara asi para velocidad
                                    // intent.putExtra("idUser",strUser);
-                                    intent.putExtra("idUser","juanes@este.com");
+                                    intent.putExtra("idUser",user.getEmail());
                                     startActivity(intent);
                                     finish();
                                 } else {
