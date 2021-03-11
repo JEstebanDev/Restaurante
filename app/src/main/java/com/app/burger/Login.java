@@ -106,12 +106,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("Mensaje","signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(Login.this, Home.class);
+                                    /*FirebaseUser user = mAuth.getCurrentUser();
+                                    Intent intent = new Intent(Login.this, Menu_bar.class);
                                     //Esto temporalmente estara asi para velocidad
                                    // intent.putExtra("idUser",strUser);
                                     intent.putExtra("idUser",user.getEmail());
                                     startActivity(intent);
+                                    finish();*/
+
+                                    startActivity(new Intent(Login.this, Menu_bar.class));
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.

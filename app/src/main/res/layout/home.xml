@@ -58,7 +58,6 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
-        <include layout="@layout/menu_bar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

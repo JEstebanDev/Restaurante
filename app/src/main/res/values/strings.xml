@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Burger</string>
 
+
+    <!-- Mensajes de Login y crear cuenta-->
     <string name="login">Login</string>
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="usuario">Usuario</string>
@@ -9,13 +11,17 @@
     <string name="re_contrasena">Repetir Contraseña</string>
     <string name="iniciar_sesion">Iniciar Sesión</string>
     <string name="siguenos">Siguenos en nuestras redes sociales</string>
-    <string name="politicas">Al crear una cuenta, aceptas nuestras políticas de privacidad</string>
+    <string name="politicas" >Al crear una cuenta, aceptas nuestras políticas de privacidad</string>
 
+
+    <!-- Mensajes de home-->
     <string name="tienes_hambre">¿Tienes hambre?</string>
     <string name="tienes_hambre_descripcion">Estos son los platillos mas populares</string>
     <string name="tus_platillos_preferidos">¡Tus platillos preferidos!</string>
     <string name="lo_quiero">¡Lo Quiero!</string>
 
+    <!-- Mensajes de menu-->
+    <string name="nuestras_categorias">Nuestras categorías</string>
 
     <!-- Mensajes de error-->
 
@@ -29,7 +35,8 @@
     <string name="menu_pedido">Pedido</string>
     <string name="menu_factura">Factura</string>
     <string name="menu_perfil">Perfil</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
