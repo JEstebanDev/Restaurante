@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
-
+/*
     RecyclerView recycler_home,recycler_fav;
     DocumentReference docRef;
     private ArrayList<Plates> aPlates;
@@ -50,7 +50,8 @@ public class Home extends AppCompatActivity {
         .addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    Plates plate=new Plates(document.get("name").toString(),
+                    Plates plate=new Plates(
+                            document.get("name").toString(),
                             document.get("image").toString(),
                             Integer.parseInt(document.get("price").toString()));
                     aPlates.add(plate);
@@ -76,7 +77,8 @@ public class Home extends AppCompatActivity {
                             if (task1.isSuccessful()) {
                                 DocumentSnapshot document1 = task1.getResult();
                                 if (document1.exists()) {
-                                    Plates plate=new Plates(document1.get("name").toString(),
+                                    Plates plate=new Plates(
+                                            document1.get("name").toString(),
                                             document1.get("image").toString(),
                                             Integer.parseInt(document1.get("price").toString()));
                                     aUserPlates.add(plate);
@@ -101,4 +103,8 @@ public class Home extends AppCompatActivity {
         });
 
     }
+
+ */
 }
+
+

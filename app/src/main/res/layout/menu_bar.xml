@@ -19,6 +19,7 @@ android:layout_height="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_panel"
             app:itemIconSize="30sp"
+            app:itemIconTint="@drawable/navigation_view_colored"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu"/>

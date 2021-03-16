@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Fragment_Home extends Fragment {
+public class Fragment_Home extends Fragment{
 
     RecyclerView recycler_home,recycler_fav;
     DocumentReference docRef;
@@ -42,7 +42,6 @@ public class Fragment_Home extends Fragment {
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         View view=inflater.inflate(R.layout.fragment__home, container, false);
-
 
         recycler_home=view.findViewById(R.id.recycler_home);
         recycler_home.setHasFixedSize(true);
@@ -67,7 +66,10 @@ public class Fragment_Home extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Plates plate=new Plates(document.get("name").toString(),
+                            Plates plate=new Plates(
+                                    document.getId(),
+                                    document.get("name").toString(),
+                                    document.get("description").toString(),
                                     document.get("image").toString(),
                                     Integer.parseInt(document.get("price").toString()));
                             aPlates.add(plate);
@@ -93,7 +95,10 @@ public class Fragment_Home extends Fragment {
                             if (task1.isSuccessful()) {
                                 DocumentSnapshot document1 = task1.getResult();
                                 if (document1.exists()) {
-                                    Plates plate=new Plates(document1.get("name").toString(),
+                                    Plates plate=new Plates(
+                                            document1.getId(),
+                                            document1.get("name").toString(),
+                                            document1.get("description").toString(),
                                             document1.get("image").toString(),
                                             Integer.parseInt(document1.get("price").toString()));
                                     aUserPlates.add(plate);

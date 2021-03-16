@@ -27,6 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:id="@+id/name"
+            android:padding="10sp"
+            android:fontFamily="@font/robotomedium"
+            android:textColor="@color/dark_blue"
             android:textAlignment="center"
             android:text="Android"
             android:textSize="20dp"/>
@@ -34,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/price"
+            android:fontFamily="@font/robotomedium"
             android:textColor="@color/orange"
             android:text="12000"
             android:textSize="20dp"/>

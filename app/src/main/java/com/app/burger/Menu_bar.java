@@ -2,9 +2,7 @@ package com.app.burger;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +13,7 @@ public class Menu_bar extends AppCompatActivity {
 
     Fragment_Home fragment_home=new Fragment_Home();
     Fragment_Menu fragment_menu=new Fragment_Menu();
+    Fragment_Order fragment_order =new Fragment_Order();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +34,9 @@ public class Menu_bar extends AppCompatActivity {
                 break;
             case R.id.menu_menu:
                 loadFragment(fragment_menu);
+                break;
+            case R.id.menu_pedido:
+                loadFragment(fragment_order);
                 break;
 
         }
