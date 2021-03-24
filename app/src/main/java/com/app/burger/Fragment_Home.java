@@ -22,7 +22,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Fragment_Home extends Fragment{
 
     RecyclerView recycler_home,recycler_fav;
@@ -33,14 +32,12 @@ public class Fragment_Home extends Fragment{
     public Fragment_Home() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         View view=inflater.inflate(R.layout.fragment__home, container, false);
 
         recycler_home=view.findViewById(R.id.recycler_home);
@@ -74,7 +71,7 @@ public class Fragment_Home extends Fragment{
                                     Integer.parseInt(document.get("price").toString()));
                             aPlates.add(plate);
                         }
-                        platesAdapter=new PlatesAdapter(aPlates,850,400);
+                        platesAdapter=new PlatesAdapter(aPlates,850,400, getContext());
                         recycler_home.setAdapter(platesAdapter);
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
@@ -102,7 +99,7 @@ public class Fragment_Home extends Fragment{
                                             document1.get("image").toString(),
                                             Integer.parseInt(document1.get("price").toString()));
                                     aUserPlates.add(plate);
-                                    platesAdapter=new PlatesAdapter(aUserPlates,650,400);
+                                    platesAdapter=new PlatesAdapter(aUserPlates,650,400, getContext());
                                     recycler_fav.setAdapter(platesAdapter);
                                 } else {
                                     Log.d("TAG", "No such document");

@@ -33,6 +33,7 @@ public class Splash extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN
             );
         }
+
         //Animation
 
         Animation animationUp=AnimationUtils.loadAnimation(this,R.anim.top_animation);

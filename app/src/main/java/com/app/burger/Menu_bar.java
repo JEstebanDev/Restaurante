@@ -13,7 +13,7 @@ public class Menu_bar extends AppCompatActivity {
 
     Fragment_Home fragment_home=new Fragment_Home();
     Fragment_Menu fragment_menu=new Fragment_Menu();
-    Fragment_Order fragment_order =new Fragment_Order();
+    Fragment_Order fragment_order=new Fragment_Order();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,30 +22,39 @@ public class Menu_bar extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.frame_Menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
-        loadFragment(fragment_home);
-
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container,fragment_home);
+        transaction.add(R.id.container,fragment_menu);
+        transaction.add(R.id.container,fragment_order);
+        transaction.hide(fragment_menu);
+        transaction.hide(fragment_order);
+        transaction.commit();
     }
     @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod= item -> {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (item.getItemId())
         {
             case R.id.menu_home:
-                loadFragment(fragment_home);
+                transaction.hide(fragment_menu);
+                transaction.hide(fragment_order);
+                transaction.show(fragment_home);
+                transaction.commit();
                 break;
             case R.id.menu_menu:
-                loadFragment(fragment_menu);
+                transaction.hide(fragment_home);
+                transaction.hide(fragment_order);
+                transaction.show(fragment_menu);
+                transaction.commit();
+
                 break;
             case R.id.menu_pedido:
-                loadFragment(fragment_order);
+                transaction.hide(fragment_home);
+                transaction.hide(fragment_menu);
+                transaction.show(fragment_order);
+                transaction.commit();
                 break;
-
         }
         return false;
     };
-    private void loadFragment(Fragment fragment){
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container,fragment);
-        transaction.commit();
-
-    }
 }

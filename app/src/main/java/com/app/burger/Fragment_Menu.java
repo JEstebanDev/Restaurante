@@ -66,7 +66,7 @@ public class Fragment_Menu extends Fragment implements View.OnClickListener{
                                     Integer.parseInt(document.get("price").toString()));
                             aPlates.add(plate);
                         }
-                        platesAdapter=new PlatesAdapter(aPlates,650,400);
+                        platesAdapter=new PlatesAdapter(aPlates,650,400, getContext());
                         recycler_menu.setAdapter(platesAdapter);
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
@@ -113,14 +113,11 @@ public class Fragment_Menu extends Fragment implements View.OnClickListener{
                                     Integer.parseInt(document.get("price").toString()));
                             aPlates.add(plate);
                         }
-                        platesAdapter=new PlatesAdapter(aPlates, 650, 400);
+                        platesAdapter=new PlatesAdapter(aPlates, 650, 400, getContext());
                         recycler_menu.setAdapter(platesAdapter);
                     } else {
                         Log.d("TAG", "Error getting documents: ", task.getException());
                     }
                 });
-    }
-    public void goToDescription(Plates items){
-
     }
 }

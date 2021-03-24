@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:id="@+id/container"
     tools:context=".Menu_bar">
 
-    <FrameLayout
-        android:id="@+id/container"
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/frame_Menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_panel"
+        app:itemIconSize="30sp"
+        app:itemIconTint="@drawable/navigation_view_colored"
+        app:menu="@menu/menu"
+        android:layout_gravity="bottom"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/frame_Menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/menu_panel"
-            app:itemIconSize="30sp"
-            app:itemIconTint="@drawable/navigation_view_colored"
-            android:layout_alignParentBottom="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/menu"/>
-
-</RelativeLayout>
+</FrameLayout>
