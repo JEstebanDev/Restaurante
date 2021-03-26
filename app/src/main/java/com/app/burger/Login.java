@@ -3,7 +3,9 @@ package com.app.burger;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -28,6 +30,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,9 +61,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         btnLabelCreate.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
+
+        createTables();
+
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void createTables() {
+        SQLiteDatabase db;
+        db=openOrCreateDatabase("burger.db",MODE_PRIVATE, null);
+        db.execSQL("DROP TABLE IF EXISTS order_data");
+        db.execSQL("DROP TABLE IF EXISTS user_order");
+        db.execSQL("DROP TABLE IF EXISTS plate");
+        db.execSQL("CREATE TABLE IF NOT EXISTS order_data" +
+                "(id_order_data TEXT PRIMARY KEY,id_user TEXT,state TEXT,date TEXT)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS user_order" +
+                "(id_order_data TEXT PRIMARY KEY,id_plate TEXT)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS plate" +
+                "(id_plate TEXT PRIMARY KEY,image TEXT,name TEXT,description TEXT,price TEXT,state TEXT)");
+
     }
 
     private boolean validation() {

@@ -1,6 +1,7 @@
 package com.app.burger;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -20,11 +21,12 @@ import java.util.ArrayList;
 public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.ViewHolder> {
     ArrayList<Plates> arrayPlates;
     int heigh,width;
-
-    public PlatesAdapterOrder(ArrayList<Plates> arrayPlates, int heigh, int width) {
+    private Context mContext;
+    public PlatesAdapterOrder(ArrayList<Plates> arrayPlates, int heigh, int width, Context mContext) {
         this.arrayPlates = arrayPlates;
         this.heigh=heigh;
         this.width=width;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -41,9 +43,9 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
         Picasso.get().load(arrayPlates.get(position).getImage()).resize(heigh,width).centerCrop().into(holder.ivimageView);
         holder.textVname.setText(arrayPlates.get(position).getName());
         holder.textVprice.setText("$ "+arrayPlates.get(position).getPrice());
-        holder.btnBuy.setOnClickListener(v -> {
-            holder.btnBuy.setText(R.string.Anadido);
-            holder.btnBuy.setBackgroundColor( Color.parseColor( "#FFCC33" ) );
+        holder.btnPlus.setOnClickListener(v -> {
+        });
+        holder.btnMinus.setOnClickListener(v -> {
         });
         holder.itemView.setOnClickListener(v -> {
             Intent intent=new Intent(holder.itemView.getContext(),Details_Plates.class);
@@ -60,14 +62,16 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
         ImageView ivimageView;
         TextView textVname;
         TextView textVprice;
-        Button btnBuy;
+        Button btnPlus;
+        Button btnMinus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivimageView=itemView.findViewById(R.id.imageView);
             textVname=itemView.findViewById(R.id.name);
             textVprice=itemView.findViewById(R.id.price);
-            btnBuy=itemView.findViewById(R.id.btnBuy);
+            btnPlus=itemView.findViewById(R.id.btnPlus);
+            btnMinus=itemView.findViewById(R.id.btnMinus);
         }
     }
 }

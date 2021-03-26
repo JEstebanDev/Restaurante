@@ -1,5 +1,8 @@
 package com.app.burger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Plates implements Serializable {
@@ -20,6 +23,7 @@ public class Plates implements Serializable {
         this.price = price;
     }
 
+
     public String getId() {
         return id;
     }
@@ -35,7 +39,6 @@ public class Plates implements Serializable {
     public String getImage() {
         return image;
     }
-
 
     public int getPrice() {
         return price;

@@ -21,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Fragment_Home extends Fragment{
 
@@ -84,30 +85,32 @@ public class Fragment_Home extends Fragment{
                 if (document.exists()) {
                     Users usuario=new Users(document.get("name").toString(),
                             document.get("state").toString(),
-                            Integer.parseInt(document.get("points").toString()),(List<String>) document.get("fav-plate"));
+                            Integer.parseInt(document.get("points").toString()),
+                            (Map<String, Integer>) document.get("fav-plate"));
 
-                    for (int i=0;i<usuario.getFavPlates().size();i++){
-                        docRef = databaseReference.collection("plates").document(usuario.favPlates.get(i));
-                        docRef.get().addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                DocumentSnapshot document1 = task1.getResult();
-                                if (document1.exists()) {
-                                    Plates plate=new Plates(
-                                            document1.getId(),
-                                            document1.get("name").toString(),
-                                            document1.get("description").toString(),
-                                            document1.get("image").toString(),
-                                            Integer.parseInt(document1.get("price").toString()));
-                                    aUserPlates.add(plate);
-                                    platesAdapter=new PlatesAdapter(aUserPlates,650,400, getContext());
-                                    recycler_fav.setAdapter(platesAdapter);
-                                } else {
-                                    Log.d("TAG", "No such document");
-                                }
-                            } else {
-                                Log.d("TAG", "get failed with ", task1.getException());
-                            }
-                        });
+                   for (Map.Entry<String, Integer> entry : usuario.getFavPlates().entrySet()) {
+                       docRef = databaseReference.collection("plates").document(entry.getKey());
+                       docRef.get().addOnCompleteListener(task1 -> {
+                           if (task1.isSuccessful()) {
+                               DocumentSnapshot document1 = task1.getResult();
+                               if (document1.exists()) {
+                                   Plates plate=new Plates(
+                                           document1.getId(),
+                                           document1.get("name").toString(),
+                                           document1.get("description").toString(),
+                                           document1.get("image").toString(),
+                                           Integer.parseInt(document1.get("price").toString()));
+                                   aUserPlates.add(plate);
+                                   platesAdapter=new PlatesAdapter(aUserPlates,650,400, getContext());
+                                   recycler_fav.setAdapter(platesAdapter);
+                               } else {
+                                   Log.d("TAG", "No such document");
+                               }
+                           } else {
+                               Log.d("TAG", "get failed with ", task1.getException());
+                           }
+                       });
+
                     }
 
                     //Log.d("DATOS USUARIO", "DocumentSnapshot data: " + document.getData());

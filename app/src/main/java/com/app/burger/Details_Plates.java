@@ -18,7 +18,6 @@ public class Details_Plates extends AppCompatActivity {
 
     ImageView imageView;
     TextView name,description,price;
-    Button btnBuy;
     Plates plates;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,6 @@ public class Details_Plates extends AppCompatActivity {
         name=findViewById(R.id.name);
         description=findViewById(R.id.description);
         price=findViewById(R.id.price);
-        btnBuy=findViewById(R.id.btnBuy);
         initValues();
     }
 
@@ -38,10 +36,6 @@ public class Details_Plates extends AppCompatActivity {
         description.setText(plates.getDescription());
         price.setText("$ "+plates.getPrice());
         Picasso.get().load(plates.getImage()).fit().into(imageView);
-        btnBuy.setOnClickListener(v -> {
-            btnBuy.setText(R.string.Anadido);
-            btnBuy.setBackgroundColor( Color.parseColor( "#FFCC33" ) );
-        });
 
     }
 }

@@ -18,15 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder> {
     ArrayList<Plates> arrayPlates;
     int heigh,width;
     private Context mContext;
-    private static final String FILE_NAME="plates.txt";
     public PlatesAdapter(ArrayList<Plates> arrayPlates, int heigh, int width, Context mContext) {
         this.arrayPlates = arrayPlates;
         this.heigh=heigh;
@@ -40,7 +45,6 @@ public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item,parent,false);
         return new ViewHolder(view);
     }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull PlatesAdapter.ViewHolder holder, int position) {
@@ -49,8 +53,16 @@ public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder
         holder.textVname.setText(arrayPlates.get(position).getName());
         holder.textVprice.setText("$ "+arrayPlates.get(position).getPrice());
         holder.btnBuy.setOnClickListener(v -> {
+
+
+            DBHelper dBhelper = new DBHelper(mContext);
+            dBhelper.INSERT_PLATE(arrayPlates.get(position).getId(),arrayPlates.get(position).getImage(),
+                    arrayPlates.get(position).getName(),
+                    arrayPlates.get(position).getDescription(),
+                    arrayPlates.get(position).getPrice());
             holder.btnBuy.setText(R.string.Anadido);
             holder.btnBuy.setBackgroundColor( Color.parseColor( "#FFCC33" ) );
+
 
         });
         holder.itemView.setOnClickListener(v -> {

@@ -68,23 +68,10 @@
                 android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_margin="20dp"
                 android:fontFamily="@font/robotomedium"
                 android:text="12000"
                 android:textColor="@color/orange"
-                android:textSize="25dp" />
-
-            <Button
-                android:id="@+id/btnBuy"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/orange"
-                android:fontFamily="@font/robotomedium"
-                android:padding="15sp"
-                android:text="@string/lo_quiero"
-                android:textColor="@color/white"
                 android:textSize="25dp" />
 
 

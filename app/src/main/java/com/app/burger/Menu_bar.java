@@ -1,13 +1,19 @@
 package com.app.burger;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class Menu_bar extends AppCompatActivity {
 
@@ -49,12 +55,40 @@ public class Menu_bar extends AppCompatActivity {
 
                 break;
             case R.id.menu_pedido:
+                metodo();
                 transaction.hide(fragment_home);
                 transaction.hide(fragment_menu);
                 transaction.show(fragment_order);
                 transaction.commit();
+
+
                 break;
         }
         return false;
     };
+
+    private void metodo() {
+        fragment_order.aPlates=new ArrayList<>();
+        DBHelper dbHelper=new DBHelper(this);
+        Cursor cursor=dbHelper.GET_PLATE_DATA();
+        if (cursor.moveToFirst()){
+            do{
+                String id_plate = cursor.getString(cursor.getColumnIndex("id_plate"));
+                String name = cursor.getString(cursor.getColumnIndex("name"));
+                String description = cursor.getString(cursor.getColumnIndex("description"));
+                String image = cursor.getString(cursor.getColumnIndex("image"));
+                String price = cursor.getString(cursor.getColumnIndex("price"));
+                Plates plate=new Plates(
+                        id_plate,
+                        name,
+                        description,
+                        image,
+                        Integer.parseInt(price));
+                fragment_order.aPlates.add(plate);
+            }while(cursor.moveToNext());
+            fragment_order.platesAdapter=new PlatesAdapterOrder(fragment_order.aPlates, 650, 400, fragment_order.getContext());
+            fragment_order.recycler_menu.setAdapter(fragment_order.platesAdapter);
+        }
+        cursor.close();
+    }
 }
