@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Fragment_Order extends Fragment {
 
-    public ArrayList<Plates> aPlates;
+    public ArrayList<PlatesOrder> aPlates;
     public PlatesAdapterOrder platesAdapter;
     public RecyclerView recycler_menu;
     public Fragment_Order() {

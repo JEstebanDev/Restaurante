@@ -23,7 +23,6 @@ public class Plates implements Serializable {
         this.price = price;
     }
 
-
     public String getId() {
         return id;
     }

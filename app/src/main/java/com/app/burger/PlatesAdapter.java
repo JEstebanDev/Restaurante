@@ -53,12 +53,11 @@ public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder
         holder.textVname.setText(arrayPlates.get(position).getName());
         holder.textVprice.setText("$ "+arrayPlates.get(position).getPrice());
         holder.btnBuy.setOnClickListener(v -> {
-
-
             DBHelper dBhelper = new DBHelper(mContext);
             dBhelper.INSERT_PLATE(arrayPlates.get(position).getId(),arrayPlates.get(position).getImage(),
                     arrayPlates.get(position).getName(),
                     arrayPlates.get(position).getDescription(),
+                    1,
                     arrayPlates.get(position).getPrice());
             holder.btnBuy.setText(R.string.Anadido);
             holder.btnBuy.setBackgroundColor( Color.parseColor( "#FFCC33" ) );

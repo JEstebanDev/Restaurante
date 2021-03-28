@@ -62,28 +62,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         btnLogin.setOnClickListener(this);
 
 
-        createTables();
+        DBHelper dbHelper =new DBHelper(this);
+        SQLiteDatabase db=openOrCreateDatabase("burger.db",MODE_PRIVATE, null);
+        dbHelper.onCreate(db);
 
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
-    }
-
-    private void createTables() {
-        SQLiteDatabase db;
-        db=openOrCreateDatabase("burger.db",MODE_PRIVATE, null);
-        db.execSQL("DROP TABLE IF EXISTS order_data");
-        db.execSQL("DROP TABLE IF EXISTS user_order");
-        db.execSQL("DROP TABLE IF EXISTS plate");
-        db.execSQL("CREATE TABLE IF NOT EXISTS order_data" +
-                "(id_order_data TEXT PRIMARY KEY,id_user TEXT,state TEXT,date TEXT)");
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS user_order" +
-                "(id_order_data TEXT PRIMARY KEY,id_plate TEXT)");
-
-        db.execSQL("CREATE TABLE IF NOT EXISTS plate" +
-                "(id_plate TEXT PRIMARY KEY,image TEXT,name TEXT,description TEXT,price TEXT,state TEXT)");
-
     }
 
     private boolean validation() {
