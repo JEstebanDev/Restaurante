@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:elevation="10dp"
-    android:layout_marginTop="20dp"
-    android:layout_marginBottom="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     app:cardCornerRadius="10dp">
@@ -25,13 +25,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/name"
             android:textColor="@color/dark_blue"
             android:fontFamily="@font/robotomedium"
             android:textAlignment="center"
             android:text="Android"
-            android:padding="10sp"
+            android:padding="5sp"
             android:textSize="22sp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -53,8 +53,8 @@
             <Button
                 android:id="@+id/btnPlus"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round_button_2"
                 android:text="+"
@@ -77,8 +77,8 @@
             <Button
                 android:id="@+id/btnMinus"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round_button_3"
                 android:text="-"

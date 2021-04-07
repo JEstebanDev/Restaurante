@@ -19,7 +19,7 @@
     <string name="tienes_hambre_descripcion">Estos son los platillos mas populares</string>
     <string name="tus_platillos_preferidos">¡Tus platillos preferidos!</string>
     <string name="lo_quiero">¡Lo Quiero!</string>
-    <string name="Anadido">Añadido</string>
+    <string name="anadido">Añadido</string>
 
     <!-- Mensajes de splash-->
     <string name="by_">by:JuanDev</string>
@@ -27,17 +27,22 @@
     <string name="nuestras_categorias">Nuestras categorías</string>
 
     <!-- Mensajes de order-->
-    <string name="Tu_pedido">Tu pedido</string>
-    <string name="Realizar_mi_pedido">Realizar mi pedido</string>
+    <string name="tu_pedido">Tu pedido</string>
+    <string name="realizar_mi_pedido">Realizar mi pedido</string>
+
+    <!-- Mensajes de bill-->
+    <string name="tu_factura">Tu Factura</string>
+    <string name="cantidad_factura">Cant</string>
+    <string name="precio_factura">Total</string>
 
     <!-- Mensajes de details_product-->
     <string name="Hmmm">¡Hmm Yummi!</string>
 
     <!-- Mensajes de error-->
 
-    <string name="Correo_no_valido">Correo no valido</string>
-    <string name="Rellena_todos_los_campos">Rellena todos los campos</string>
-    <string name="Las_contraseñas_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="correo_no_valido">Correo no valido</string>
+    <string name="rellena_todos_los_campos">Rellena todos los campos</string>
+    <string name="las_contraseñas_no_coinciden">Las contraseñas no coinciden</string>
 
     <!-- menu -->
     <string name="menu_home">Home</string>

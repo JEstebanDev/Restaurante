@@ -59,7 +59,7 @@ public class PlatesAdapter extends RecyclerView.Adapter<PlatesAdapter.ViewHolder
                     arrayPlates.get(position).getDescription(),
                     1,
                     arrayPlates.get(position).getPrice());
-            holder.btnBuy.setText(R.string.Anadido);
+            holder.btnBuy.setText(R.string.anadido);
             holder.btnBuy.setBackgroundColor( Color.parseColor( "#FFCC33" ) );
 
 

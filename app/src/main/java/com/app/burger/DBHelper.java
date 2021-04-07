@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor=db.rawQuery("SELECT * FROM plate WHERE id_plate='"+id_pate+"' and state='activo'",null);
+        Cursor cursor=db.rawQuery("SELECT * FROM plate WHERE id_plate='"+id_pate+"'",null);
 
         if (cursor.getCount()>0){
             //Existe ya este plato asi que no haga nada
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put("description",description);
             contentValues.put("amount",amount);
             contentValues.put("price",price);
-            contentValues.put("state","activo");
+            contentValues.put("state","");
             long result=db.insert("plate",null,contentValues);
             return result != -1;
         }
@@ -71,9 +71,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void UPDATE_PLATE_BILL(String id_plate, String state){
+
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("state",state);
+
+        Cursor cursor=db.rawQuery("SELECT * FROM plate WHERE id_plate= ?",new String[]{id_plate});
+
+        if(cursor.getCount()>0){
+            long result=db.update("plate",contentValues,"id_plate=?",new String[]{id_plate});
+        }
+
+    }
+
     public Cursor GET_PLATE_DATA(){
         SQLiteDatabase db=this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM plate", null);
+        return db.rawQuery("SELECT * FROM plate ", null);
+    }
+
+    public Cursor GET_PLATE_DATA_BILL(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM plate WHERE plate.state='activo'", null);
     }
 
     public Boolean DELETE_PLATE(String id_plate){

@@ -18,7 +18,7 @@ public class Details_Plates extends AppCompatActivity {
 
     ImageView imageView;
     TextView name,description,price;
-    PlatesOrder platesOrder;
+    Plates plates;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_plates);
@@ -31,11 +31,11 @@ public class Details_Plates extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void initValues() {
-        platesOrder= (PlatesOrder) getIntent().getExtras().getSerializable("itemDetails");
-        name.setText(platesOrder.getName());
-        description.setText(platesOrder.getDescription());
-        price.setText("$ "+platesOrder.getPrice());
-        Picasso.get().load(platesOrder.getImage()).fit().into(imageView);
+        plates= (Plates) getIntent().getExtras().getSerializable("itemDetails");
+        name.setText(plates.getName());
+        description.setText(plates.getDescription());
+        price.setText("$ "+plates.getPrice());
+        Picasso.get().load(plates.getImage()).fit().into(imageView);
 
     }
 }

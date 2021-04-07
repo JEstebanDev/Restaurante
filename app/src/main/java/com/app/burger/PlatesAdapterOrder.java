@@ -15,19 +15,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.ViewHolder> {
-    ArrayList<PlatesOrder> arrayPlates;
+    ArrayList<Plates> arrayPlates;
     int heigh,width;
     private Context mContext;
 
+    private FirebaseFirestore databaseReference;
 
-
-    public PlatesAdapterOrder(ArrayList<PlatesOrder> arrayPlates, int heigh, int width, Context mContext) {
+    public PlatesAdapterOrder(ArrayList<Plates> arrayPlates, int heigh, int width, Context mContext) {
         this.arrayPlates = arrayPlates;
         this.heigh=heigh;
         this.width=width;
@@ -44,13 +49,14 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull PlatesAdapterOrder.ViewHolder holder, int position) {
-        final PlatesOrder plato=arrayPlates.get(position);
+        final Plates plato=arrayPlates.get(position);
         Picasso.get().load(arrayPlates.get(position).getImage()).resize(heigh,width).centerCrop().into(holder.ivimageView);
         holder.textVname.setText(arrayPlates.get(position).getName());
+        holder.textAmount.setText(""+arrayPlates.get(position).getAmount());
         holder.textVprice.setText("$ "+arrayPlates.get(position).getPrice());
         AtomicInteger constant= new AtomicInteger(1);
         DBHelper dbHelper=new DBHelper(mContext);
-
+        constant.set(arrayPlates.get(position).getAmount());
         holder.btnPlus.setOnClickListener(v -> {
             //condicional para que la cantidad de un producto no pase de 9
             if (constant.get()>8){
@@ -60,6 +66,7 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
                 constant.set(1);
             }else{
                 holder.textAmount.setText(""+constant.incrementAndGet());
+                arrayPlates.get(position).setAmount(constant.get());
                 dbHelper.UPDATE_PLATE(arrayPlates.get(position).getId(),constant.get());
             }
         });
@@ -67,10 +74,11 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
             if(constant.get()<=0){
                 constant.getAndSet(0);
             }else{
+                arrayPlates.get(position).setAmount(constant.get());
                 holder.textAmount.setText(""+constant.decrementAndGet());
             }
             if (constant.get()==0){
-                Log.d("entrando","aqui");
+                arrayPlates.get(position).setAmount(constant.get());
                 dbHelper.DELETE_PLATE(arrayPlates.get(position).getId());
                 //remueve item anteriormenten borrado por haber elegido 0 en cantidad de producto
                arrayPlates.remove(position);
@@ -89,10 +97,6 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
             holder.itemView.getContext().startActivity(intent);
         });
 
-        holder.btnOrderNow.setOnClickListener(v -> {
-
-
-        });
     }
 
     @Override
@@ -104,7 +108,6 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
         TextView textVname;
         TextView textAmount;
         TextView textVprice;
-        Button btnOrderNow;
         Button btnPlus;
         Button btnMinus;
 
@@ -114,7 +117,6 @@ public class PlatesAdapterOrder extends RecyclerView.Adapter<PlatesAdapterOrder.
             textVname=itemView.findViewById(R.id.name);
             textAmount=itemView.findViewById(R.id.textAmount);
             textVprice=itemView.findViewById(R.id.price);
-            btnOrderNow=itemView.findViewById(R.id.btnOrderNow);
             btnPlus=itemView.findViewById(R.id.btnPlus);
             btnMinus=itemView.findViewById(R.id.btnMinus);
         }

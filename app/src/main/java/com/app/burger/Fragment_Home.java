@@ -69,7 +69,7 @@ public class Fragment_Home extends Fragment{
                                     document.get("name").toString(),
                                     document.get("description").toString(),
                                     document.get("image").toString(),
-                                    Integer.parseInt(document.get("price").toString()));
+                                    Integer.parseInt(document.get("price").toString()),0);
                             aPlates.add(plate);
                         }
                         platesAdapter=new PlatesAdapter(aPlates,850,400, getContext());
@@ -99,7 +99,7 @@ public class Fragment_Home extends Fragment{
                                            document1.get("name").toString(),
                                            document1.get("description").toString(),
                                            document1.get("image").toString(),
-                                           Integer.parseInt(document1.get("price").toString()));
+                                           Integer.parseInt(document1.get("price").toString()),0);
                                    aUserPlates.add(plate);
                                    platesAdapter=new PlatesAdapter(aUserPlates,650,400, getContext());
                                    recycler_fav.setAdapter(platesAdapter);

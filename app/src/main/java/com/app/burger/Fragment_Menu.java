@@ -63,7 +63,7 @@ public class Fragment_Menu extends Fragment implements View.OnClickListener{
                                     document.get("name").toString(),
                                     document.get("description").toString(),
                                     document.get("image").toString(),
-                                    Integer.parseInt(document.get("price").toString()));
+                                    Integer.parseInt(document.get("price").toString()),0);
                             aPlates.add(plate);
                         }
                         platesAdapter=new PlatesAdapter(aPlates,650,400, getContext());
@@ -110,7 +110,7 @@ public class Fragment_Menu extends Fragment implements View.OnClickListener{
                                     document.get("name").toString(),
                                     document.get("description").toString(),
                                     document.get("image").toString(),
-                                    Integer.parseInt(document.get("price").toString()));
+                                    Integer.parseInt(document.get("price").toString()),0);
                             aPlates.add(plate);
                         }
                         platesAdapter=new PlatesAdapter(aPlates, 650, 400, getContext());

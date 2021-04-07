@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_Order">
+    tools:context=".Fragment_Order"
+    android:background="@color/light_gray">
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -21,14 +22,15 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/karlabold"
         android:padding="10dp"
-        android:text="@string/Tu_pedido"
+        android:text="@string/tu_pedido"
         android:textColor="@color/dark_blue"
         android:textSize="30sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pedido"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="65sp">
         </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
@@ -36,12 +38,12 @@
         android:id="@+id/btnOrderNow"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="70sp"
+        android:layout_marginBottom="60sp"
         android:layout_gravity="bottom|center"
         android:background="@color/orange"
         android:textColor="@color/white"
         android:fontFamily="@font/robotomedium"
-        android:text="@string/Realizar_mi_pedido"
+        android:text="@string/realizar_mi_pedido"
         android:textSize="20sp" />
 
 
