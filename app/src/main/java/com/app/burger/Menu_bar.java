@@ -21,6 +21,7 @@ public class Menu_bar extends AppCompatActivity {
     Fragment_Menu fragment_menu=new Fragment_Menu();
     Fragment_Order fragment_order=new Fragment_Order();
     Fragment_Bill fragment_bill=new Fragment_Bill();
+    Fragment_Account fragment_account=new Fragment_Account();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,15 +31,16 @@ public class Menu_bar extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.frame_Menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
-
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.container,fragment_home);
         transaction.add(R.id.container,fragment_menu);
         transaction.add(R.id.container,fragment_order);
         transaction.add(R.id.container, fragment_bill);
+        transaction.add(R.id.container, fragment_account);
         transaction.hide(fragment_menu);
         transaction.hide(fragment_order);
         transaction.hide(fragment_bill);
+        transaction.hide(fragment_account);
         transaction.commit();
     }
     @SuppressLint("NonConstantResourceId")
@@ -50,6 +52,7 @@ public class Menu_bar extends AppCompatActivity {
                 transaction.hide(fragment_menu);
                 transaction.hide(fragment_order);
                 transaction.hide(fragment_bill);
+                transaction.hide(fragment_account);
                 transaction.show(fragment_home);
                 transaction.commit();
                 break;
@@ -57,6 +60,7 @@ public class Menu_bar extends AppCompatActivity {
                 transaction.hide(fragment_home);
                 transaction.hide(fragment_order);
                 transaction.hide(fragment_bill);
+                transaction.hide(fragment_account);
                 transaction.show(fragment_menu);
                 transaction.commit();
 
@@ -66,6 +70,7 @@ public class Menu_bar extends AppCompatActivity {
                 transaction.hide(fragment_home);
                 transaction.hide(fragment_menu);
                 transaction.hide(fragment_bill);
+                transaction.hide(fragment_account);
                 transaction.show(fragment_order);
                 transaction.commit();
                 break;
@@ -74,7 +79,16 @@ public class Menu_bar extends AppCompatActivity {
                 transaction.hide(fragment_home);
                 transaction.hide(fragment_menu);
                 transaction.hide(fragment_order);
+                transaction.hide(fragment_account);
                 transaction.show(fragment_bill);
+                transaction.commit();
+                break;
+            case R.id.menu_perfil:
+                transaction.hide(fragment_home);
+                transaction.hide(fragment_menu);
+                transaction.hide(fragment_order);
+                transaction.hide(fragment_bill);
+                transaction.show(fragment_account);
                 transaction.commit();
                 break;
         }
@@ -119,7 +133,6 @@ public class Menu_bar extends AppCompatActivity {
         }
         cursor.close();
     }
-
 
     public void reloadingOrder() {
         fragment_order.aPlates=new ArrayList<>();

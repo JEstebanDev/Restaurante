@@ -19,11 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class CreateAccount extends AppCompatActivity implements View.OnClickListener {
+public class CreateAccount extends AppCompatActivity{
     private EditText editUser, editMail, editPassword, editRepassword;
     private FirebaseAuth mAuth;
     private FirebaseFirestore databaseReference;
@@ -31,8 +32,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account);
-
-        TextView textPolitics = findViewById(R.id.textPolitics);
         editUser = findViewById(R.id.editUser);
         editMail = findViewById(R.id.editMail);
         editPassword = findViewById(R.id.editPassword);
@@ -41,49 +40,83 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         Button btnLabelLogin = findViewById(R.id.btnLabelLogin);
         Button btnCreate = findViewById(R.id.btnCreate);
 
-        btnLabelLogin.setOnClickListener(this);
-        btnCreate.setOnClickListener(this);
 
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         databaseReference= FirebaseFirestore.getInstance();
+
+
+
+        btnLabelLogin.setOnClickListener(v -> {
+            startActivity(new Intent(CreateAccount.this, Login.class));
+            finish();
+        });
+
+        btnCreate.setOnClickListener(v -> {
+            String strUser = editUser.getText().toString().trim();
+            String strMail = editMail.getText().toString().trim();
+            String strPassword = editPassword.getText().toString().trim();
+            String strRepassword = editRepassword.getText().toString().trim();
+            if (validation(strUser,strMail,strPassword,strRepassword)){
+                mAuth.createUserWithEmailAndPassword(strMail, strPassword)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Mensaje", "createUserWithEmail:success");
+                            createUser(strUser,strMail);
+                            startActivity(new Intent(CreateAccount.this, Menu_bar.class));
+                            finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Mensaje", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(CreateAccount.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                });
+            }
+        });
     }
 
-    private boolean validation() {
+    private boolean validation(String strUser, String strMail, String strPassword, String strRepassword) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-
-        String strUser = editUser.getText().toString().trim();
-        String strMail = editMail.getText().toString().trim();
-        String strPassword = editPassword.getText().toString().trim();
-        String strRepassword = editRepassword.getText().toString().trim();
-
-        if (!TextUtils.isEmpty(strUser) && !TextUtils.isEmpty(strMail)
-                && !TextUtils.isEmpty(strPassword) && !TextUtils.isEmpty(strRepassword)) {
+        if (!strUser.isEmpty() && !strMail.isEmpty()
+                && !strPassword.isEmpty() && !strRepassword.isEmpty()) {
             if (isValidMail(strMail)) {
                 if (strPassword.equals(strRepassword)) {
                     return isValidPassword(strPassword);
                 }else{
                     builder.setTitle("Ups!");
-
                     builder.setMessage("Las contraseñas no coinciden")
                             .setCancelable(false)
                             .setPositiveButton("OK", (dialog, id) -> {
-                                // TODO: handle the OK
-                            })
-                            .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+                                editPassword.setText("");
+                                editRepassword.setText("");
+                            });
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                     return false;
                 }
             }else{
-                Log.d("Mensaje", "Correo no valido");
-
+                builder.setTitle("Ups!");
+                builder.setMessage("El correo no es valido")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, id) -> {
+                            editMail.setText("");
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 return false;
             }
         }else{
-            Log.d("Mensaje", "Rellena todos los campos");
+            builder.setTitle("Ups!");
+            builder.setMessage("Llena todos los campos")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", (dialog, id) -> {
+                    });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
             return false;
         }
     }
@@ -92,10 +125,12 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
+            Map<String, Integer> fav_plate = new HashMap<>();
             Map<String, Object> users = new HashMap<>();
             users.put("name", strUser);
             users.put("points", 0);
             users.put("state", "active");
+            users.put("fav-plate", fav_plate);
 
             databaseReference.collection("users").document(strMail)
                     .set(users)
@@ -107,7 +142,7 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
     public static boolean isValidPassword(String strPassword) {
         Pattern PASSWORD_PATTERN
                 = Pattern.compile(
-                "[a-zA-Z0-9!@#$]{8,24}");
+                "[a-zA-Z0-9!@#$]{5,24}");
 
         return !TextUtils.isEmpty(strPassword) && PASSWORD_PATTERN.matcher(strPassword).matches();
     }
@@ -122,46 +157,6 @@ public class CreateAccount extends AppCompatActivity implements View.OnClickList
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser==null){
             Log.i("Mensaje", "No user is signed in");
-        }
-    }
-
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-        String strUser = editUser.getText().toString().trim();
-        String strMail = editMail.getText().toString().trim();
-        String strPassword = editPassword.getText().toString().trim();
-        switch (v.getId()) {
-            case R.id.btnLabelLogin:
-                startActivity(new Intent(CreateAccount.this, Login.class));
-                finish();
-                break;
-            case R.id.btnCreate:
-                if (validation()){
-                    mAuth.createUserWithEmailAndPassword(strMail, strPassword)
-                            .addOnCompleteListener(this, task -> {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("Mensaje", "createUserWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(CreateAccount.this, Home.class);
-                                    //Esto temporalmente estara asi para velocidad
-                                    // intent.putExtra("idUser",strUser);
-                                    intent.putExtra("idUser",user.getEmail());
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Mensaje", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(CreateAccount.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                                // ...
-                            });
-                    break;
-                }
         }
     }
 }

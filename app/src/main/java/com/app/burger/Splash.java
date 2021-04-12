@@ -45,7 +45,7 @@ public class Splash extends AppCompatActivity {
         imageView.setAnimation(animationUp);
         byJuanDev.setAnimation(animationBottom);
 
-        int SPLASH_SCREEN = 1500;
+        int SPLASH_SCREEN = 2500;
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             startActivity(new Intent(this, Login.class));
             finish();

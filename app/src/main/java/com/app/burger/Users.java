@@ -12,7 +12,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(String name, String state, int points, Map<String, Integer> favPlates ) {
+    public Users(String name, String state, int points, Map<String, Integer> favPlates) {
         this.name = name;
         this.state = state;
         this.points = points;
@@ -34,4 +34,5 @@ public class Users {
     public Map<String, Integer> getFavPlates() {
         return favPlates;
     }
+
 }

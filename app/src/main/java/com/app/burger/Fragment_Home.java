@@ -110,7 +110,6 @@ public class Fragment_Home extends Fragment{
                                Log.d("TAG", "get failed with ", task1.getException());
                            }
                        });
-
                     }
 
                     //Log.d("DATOS USUARIO", "DocumentSnapshot data: " + document.getData());

@@ -38,6 +38,11 @@
     <!-- Mensajes de details_product-->
     <string name="Hmmm">¡Hmm Yummi!</string>
 
+    <!-- Mensajes de account-->
+    <string name="mi_perfil">Mi Perfil</string>
+    <string name="cambiar_imagen">Cambiar imagen</string>
+    <string name="puntos">Mis puntos</string>
+
     <!-- Mensajes de error-->
 
     <string name="correo_no_valido">Correo no valido</string>

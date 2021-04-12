@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,14 +19,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,8 +43,6 @@ public class Fragment_Order extends Fragment {
     public ArrayList<Plates> aPlates;
     public PlatesAdapterOrder platesAdapter;
     public RecyclerView recycler_menu;
-
-    Fragment_Bill fragment_bill=new Fragment_Bill();
     public Fragment_Order() {
     }
 
@@ -45,18 +51,16 @@ public class Fragment_Order extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment__order, container, false);
-
         recycler_menu=view.findViewById(R.id.recycler_pedido);
         recycler_menu.setHasFixedSize(true);
         recycler_menu.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         Button btnOrderNow=view.findViewById(R.id.btnOrderNow);
         btnOrderNow.setOnClickListener(v -> {
-
             DBHelper dbHelper=new DBHelper(getContext());
-
             FirebaseAuth mAuth=FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
             Map<String, Integer> datos=new HashMap<>();
             for (int i=0;i<aPlates.size();i++)
             {
@@ -75,8 +79,6 @@ public class Fragment_Order extends Fragment {
                     .addOnFailureListener(e ->
                             Log.w("TAG", "Error adding document", e));
         });
-        FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.layout.fragment__bill, fragment_bill);
         return view;
     }
 }

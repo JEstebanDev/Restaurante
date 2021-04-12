@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends AppCompatActivity{
 
     private EditText editUser, editPassword;
     private FirebaseAuth mAuth;
@@ -58,39 +58,57 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         Button btnLabelCreate = findViewById(R.id.btnLabelCreate);
         Button btnLogin = findViewById(R.id.btnLogin);
 
-        btnLabelCreate.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
-
-
         DBHelper dbHelper =new DBHelper(this);
         SQLiteDatabase db=openOrCreateDatabase("burger.db",MODE_PRIVATE, null);
         dbHelper.onCreate(db);
-
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
-    }
 
-    private boolean validation() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String strUser = editUser.getText().toString().trim();
-        String strPassword = editPassword.getText().toString().trim();
+        btnLabelCreate.setOnClickListener(v -> {
+            startActivity(new Intent(Login.this, CreateAccount.class));
+            finish();
+        });
 
-        if (!TextUtils.isEmpty(strUser) && !TextUtils.isEmpty(strPassword)) {
-            return true;
-        }else{
-        builder.setTitle("Ups!");
+        btnLogin.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            String strUser = editUser.getText().toString().trim();
+            String strPassword = editPassword.getText().toString().trim();
 
-        builder.setMessage("Llena todos los campos")
-                .setCancelable(false)
-                .setPositiveButton("OK", (dialog, id) -> {
-                    // TODO: handle the OK
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-                return false;
-        }
+            if(!strUser.isEmpty() && !strPassword.isEmpty()){
+                mAuth.signInWithEmailAndPassword(strUser, strPassword)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("Mensaje","signInWithEmail:success");
+                                startActivity(new Intent(Login.this, Menu_bar.class));
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("Mensaje", "signInWithEmail:failure", task.getException());
+                                builder.setTitle("Ups!");
+                                builder.setMessage("Contraseña incorrecta")
+                                        .setCancelable(false)
+                                        .setPositiveButton("OK", (dialog, id) -> {
+                                            editPassword.setText("");
+                                        });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                        });
+            }else{
+                builder.setTitle("Ups!");
+                builder.setMessage("Llena todos los campos")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, id) -> {
+                            editUser.setText("");
+                            editPassword.setText("");
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            }
+        });
     }
     @Override
     public void onStart() {
@@ -99,44 +117,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser==null){
             Log.i("Mensaje", "No user is signed in");
-        }
-    }
-
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnLabelCreate:
-                startActivity(new Intent(Login.this, CreateAccount.class));
-                finish();
-                break;
-
-            case R.id.btnLogin:
-                    //POR AHORA juanes@este.com 123qweasd falta validar antes de presionar el boton
-                    mAuth.signInWithEmailAndPassword("juanes@este.com", "123qweasd")
-                            .addOnCompleteListener(this, task -> {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("Mensaje","signInWithEmail:success");
-                                    /*FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(Login.this, Menu_bar.class);
-                                    //Esto temporalmente estara asi para velocidad
-                                   // intent.putExtra("idUser",strUser);
-                                    intent.putExtra("idUser",user.getEmail());
-                                    startActivity(intent);
-                                    finish();*/
-
-                                    startActivity(new Intent(Login.this, Menu_bar.class));
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Mensaje", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                    break;
         }
     }
 }
