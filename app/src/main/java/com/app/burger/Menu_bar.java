@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -105,9 +106,15 @@ public class Menu_bar extends AppCompatActivity {
         Cursor cursor=dbHelper.GET_PLATE_DATA_BILL();
         if(cursor.getCount() == 0){
             platesAdapter=new PlatesAdapterBill(aPlates, 350, 350);
+            fragment_bill.layoutmensaje.setVisibility(View.VISIBLE);
+            fragment_bill.sup.setVisibility(View.GONE);
+            fragment_bill.contenido.setVisibility(View.GONE);
             fragment_bill.recycler_factura.setAdapter(platesAdapter);
-            fragment_bill.textVTotalPrice.setText("0");
+
         }else{
+            fragment_bill.layoutmensaje.setVisibility(View.GONE);
+            fragment_bill.sup.setVisibility(View.VISIBLE);
+            fragment_bill.contenido.setVisibility(View.VISIBLE);
             if (cursor.moveToFirst()){
                 do{
                     String id_plate = cursor.getString(cursor.getColumnIndex("id_plate"));
@@ -140,8 +147,14 @@ public class Menu_bar extends AppCompatActivity {
         Cursor cursor=dbHelper.GET_PLATE_DATA();
         if(cursor.getCount() == 0){
             fragment_order.platesAdapter=new PlatesAdapterOrder(fragment_order.aPlates, 650, 400, fragment_order.getContext());
+            fragment_order.layoutmensaje.setVisibility(View.VISIBLE);
+            fragment_order.recycler_menu.setVisibility(View.GONE);
+            fragment_order.btnOrderNow.setVisibility(View.GONE);
             fragment_order.recycler_menu.setAdapter(fragment_order.platesAdapter);
         }else{
+            fragment_order.layoutmensaje.setVisibility(View.GONE);
+            fragment_order.recycler_menu.setVisibility(View.VISIBLE);
+            fragment_order.btnOrderNow.setVisibility(View.VISIBLE);
             if (cursor.moveToFirst()){
                 do{
 

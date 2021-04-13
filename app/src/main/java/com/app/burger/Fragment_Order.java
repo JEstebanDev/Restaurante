@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +44,8 @@ public class Fragment_Order extends Fragment {
     public ArrayList<Plates> aPlates;
     public PlatesAdapterOrder platesAdapter;
     public RecyclerView recycler_menu;
+    public LinearLayout layoutmensaje;
+    public Button btnOrderNow;
     public Fragment_Order() {
     }
 
@@ -54,8 +57,9 @@ public class Fragment_Order extends Fragment {
         recycler_menu=view.findViewById(R.id.recycler_pedido);
         recycler_menu.setHasFixedSize(true);
         recycler_menu.setLayoutManager(new GridLayoutManager(getContext(),2));
+        layoutmensaje = view.findViewById(R.id.layoutmensaje);
 
-        Button btnOrderNow=view.findViewById(R.id.btnOrderNow);
+        btnOrderNow=view.findViewById(R.id.btnOrderNow);
         btnOrderNow.setOnClickListener(v -> {
             DBHelper dbHelper=new DBHelper(getContext());
             FirebaseAuth mAuth=FirebaseAuth.getInstance();

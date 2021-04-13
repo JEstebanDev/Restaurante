@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +31,8 @@ public class Fragment_Bill extends Fragment {
 
     public TextView textVTotalPrice;
     public RecyclerView recycler_factura;
+    public LinearLayout sup,layoutmensaje;
+    public ScrollView contenido;
     public Fragment_Bill() {
         // Required empty public constructor
     }
@@ -41,7 +45,9 @@ public class Fragment_Bill extends Fragment {
         recycler_factura=view.findViewById(R.id.recycler_factura);
         recycler_factura.setHasFixedSize(true);
         recycler_factura.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
+        sup = view.findViewById(R.id.sup);
+        contenido = view.findViewById(R.id.contenido);
+        layoutmensaje = view.findViewById(R.id.layoutmensaje);
         textVTotalPrice=view.findViewById(R.id.textVTotalPrice);
 
         return view;

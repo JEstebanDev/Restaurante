@@ -93,8 +93,6 @@ public class Fragment_Menu extends Fragment implements View.OnClickListener{
 
         }
     }
-
-
     private void consult(String category) {
         FirebaseFirestore databaseReference = FirebaseFirestore.getInstance();
         aPlates=new ArrayList<>();

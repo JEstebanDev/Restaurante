@@ -14,7 +14,8 @@
         tools:ignore="UselessParent"
         android:layout_marginBottom="60sp"
         tools:layout_editor_absoluteX="-116dp"
-        tools:layout_editor_absoluteY="-70dp">
+        tools:layout_editor_absoluteY="-70dp"
+        >
 
         <TextView
             android:id="@+id/textView"
@@ -25,8 +26,27 @@
             android:text="@string/tu_factura"
             android:textColor="@color/dark_blue"
             android:textSize="30sp" />
+        <LinearLayout
+            android:id="@+id/layoutmensaje"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/sindatos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karlabold"
+                android:padding="10dp"
+                android:text="No hay factura generada"
+                android:textColor="@color/dark_blue"
+                android:textSize="30sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/sup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -65,6 +85,7 @@
 
 
         <ScrollView
+            android:id="@+id/contenido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

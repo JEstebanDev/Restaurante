@@ -15,8 +15,8 @@ android:layout_height="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/menu_panel"
         app:itemIconSize="30sp"
-        app:itemIconTint="@drawable/navigation_view_colored"
         app:menu="@menu/menu"
+        app:itemIconTint="@drawable/navigation_view_colored"
         android:layout_gravity="bottom"/>
 
 </FrameLayout>

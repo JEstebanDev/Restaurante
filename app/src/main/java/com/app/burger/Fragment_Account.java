@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -42,12 +43,10 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Fragment_Account extends Fragment {
 
     private RecyclerView recycler_fav;
-    private ImageView imageView;
-    private TextView nombre,puntos;
-    private View view;
-    private DocumentReference docRef;
+    private TextView textView;
     private ArrayList<Plates> aUserPlates;
     private PlatesAdapter platesAdapter;
+    private DocumentReference docRef;
 
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
@@ -61,69 +60,19 @@ public class Fragment_Account extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view=inflater.inflate(R.layout.fragment__account, container, false);
+        View view=inflater.inflate(R.layout.fragment__account, container, false);
 
         recycler_fav= view.findViewById(R.id.recycler_fav);
         recycler_fav.setHasFixedSize(true);
         recycler_fav.setLayoutManager(new GridLayoutManager(getContext(),2));
-        imageView=view.findViewById(R.id.imageView);
-        nombre =view.findViewById(R.id.nombre);
-        puntos =view.findViewById(R.id.puntos);
-        // get the Firebase  storage reference
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        imageView.setOnClickListener(view -> chooseImage());
+
+        textView =view.findViewById(R.id.textView);
 
         consult(currentUser.getEmail());
         return view;
     }
 
-    private void chooseImage() {
-        // Defining Implicit Intent to mobile gallery
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,1);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1  && data != null && data.getData() != null) {
-            Uri saveUri = data.getData();
-            imageView.setImageURI(saveUri);
-            final ProgressDialog mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("Subiendo imagen...");
-            mDialog.show();
-
-            String image = currentUser.getEmail();    //Random name image upload
-            final StorageReference imageFolder = storageReference.child(image);
-            imageFolder.putFile(saveUri)
-            .addOnSuccessListener(taskSnapshot -> {
-                mDialog.dismiss();
-                Snackbar.make(view.findViewById(R.id.imageView),"Imagen Cargada",Snackbar.LENGTH_LONG).show();
-
-            })
-            .addOnProgressListener(taskSnapshot -> {
-                double progress = (100.00* taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                mDialog.setMessage("Cargando : "+(int)progress+"%");
-            });
-        }
-    }
-
     private void consult(String idUser) {
-        storageReference=FirebaseStorage.getInstance().getReference().child("perfil/"+idUser);
-        imageView.setImageResource(R.drawable.perfile);
-        try {
-            final File localfile= File.createTempFile(idUser,"jpeg");
-            storageReference.getFile(localfile)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                        imageView.setImageBitmap(bitmap);
-                    }).addOnFailureListener(e ->
-                        Log.d("ERROR","NO ENCONTRO IMAGEN DEL USUARIO"));
-        }catch (IOException e){
-            e.printStackTrace();
-        }
 
         FirebaseFirestore databaseReference = FirebaseFirestore.getInstance();
         aUserPlates = new ArrayList<>();
@@ -136,10 +85,7 @@ public class Fragment_Account extends Fragment {
                             document.get("state").toString(),
                             Integer.parseInt(document.get("points").toString()),
                             (Map<String, Integer>) document.get("fav-plate"));
-
-                    nombre.setText(usuario.getName());
-                    puntos.setText(usuario.getPoints()+"");
-
+                    textView.setText("¡Hola "+usuario.getName()+"!");
                     for (Map.Entry<String, Integer> entry : usuario.getFavPlates().entrySet()) {
                         docRef = databaseReference.collection("plates").document(entry.getKey());
                         docRef.get().addOnCompleteListener(task1 -> {
@@ -162,7 +108,6 @@ public class Fragment_Account extends Fragment {
                                 Log.d("TAG", "get failed with ", task1.getException());
                             }
                         });
-
                     }
 
                     //Log.d("DATOS USUARIO", "DocumentSnapshot data: " + document.getData());

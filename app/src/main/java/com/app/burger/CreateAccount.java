@@ -39,14 +39,10 @@ public class CreateAccount extends AppCompatActivity{
 
         Button btnLabelLogin = findViewById(R.id.btnLabelLogin);
         Button btnCreate = findViewById(R.id.btnCreate);
-
-
         // ...
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();
         databaseReference= FirebaseFirestore.getInstance();
-
-
 
         btnLabelLogin.setOnClickListener(v -> {
             startActivity(new Intent(CreateAccount.this, Login.class));

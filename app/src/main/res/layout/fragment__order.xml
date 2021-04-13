@@ -16,24 +16,45 @@
         tools:layout_editor_absoluteX="-116dp"
         tools:layout_editor_absoluteY="-70dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/karlabold"
-        android:padding="10dp"
-        android:text="@string/tu_pedido"
-        android:textColor="@color/dark_blue"
-        android:textSize="30sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_pedido"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="65sp">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:fontFamily="@font/karlabold"
+            android:padding="10dp"
+            android:text="@string/tu_pedido"
+            android:textColor="@color/dark_blue"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/layoutmensaje"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/sindatos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karlabold"
+                android:padding="10dp"
+                android:text="No hay pedido generado"
+                android:textColor="@color/dark_blue"
+                android:textSize="30sp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_pedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65sp">
+    </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
+
     <Button
         android:id="@+id/btnOrderNow"
         android:layout_width="220dp"
