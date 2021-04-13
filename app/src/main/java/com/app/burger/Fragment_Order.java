@@ -71,10 +71,20 @@ public class Fragment_Order extends Fragment {
                 datos.put(aPlates.get(i).getId(),aPlates.get(i).getAmount());
                 dbHelper.UPDATE_PLATE_BILL(aPlates.get(i).getId(),"activo");
             }
+            Map<String, Object> user = new HashMap<>();
+            user.put("name", mAuth.getCurrentUser().getEmail());
+            user.put("points", 0);
+            user.put("state", "activo");
+            user.put("fav-plate", datos);
+
             Map<String, Object> data_order = new HashMap<>();
             data_order.put("id_user", mAuth.getCurrentUser().getEmail());
             data_order.put("plates", datos);
             data_order.put("state", "active");
+
+            db.collection("users").document(mAuth.getCurrentUser().getEmail())
+                    .set(user)
+                    .addOnSuccessListener(aVoid -> Log.d("EXCELENTE", "DocumentSnapshot successfully written!"));
 
             db.collection("order")
                     .add(data_order)
