@@ -81,7 +81,20 @@ public class CreateAccount extends AppCompatActivity{
                 && !strPassword.isEmpty() && !strRepassword.isEmpty()) {
             if (isValidMail(strMail)) {
                 if (strPassword.equals(strRepassword)) {
-                    return isValidPassword(strPassword);
+                    if(isValidPassword(strPassword)){
+                        builder.setTitle("Ups!");
+                        builder.setMessage("Las contraseña es debil")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", (dialog, id) -> {
+                                    editPassword.setText("");
+                                    editRepassword.setText("");
+                                });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                        return false;
+                    }else{
+                        return true;
+                    }
                 }else{
                     builder.setTitle("Ups!");
                     builder.setMessage("Las contraseñas no coinciden")
