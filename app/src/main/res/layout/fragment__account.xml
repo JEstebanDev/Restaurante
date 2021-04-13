@@ -24,10 +24,7 @@
             android:padding="10dp"
             android:text="@string/mi_perfil"
             android:textColor="@color/dark_blue"
-            android:textSize="30dp" />
-
-
-
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -35,7 +32,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/karlabold"
             android:padding="10dp"
-            android:text="Mira tus platillos preferidos"
+            android:text="@string/tus_platillos_preferidos"
             android:textColor="@color/dark_blue"
             android:textSize="30dp" />
 

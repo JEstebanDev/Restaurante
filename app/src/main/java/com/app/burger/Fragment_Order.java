@@ -1,9 +1,16 @@
 package com.app.burger;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,16 +20,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Fragment_Order extends Fragment {
 
@@ -49,24 +64,16 @@ public class Fragment_Order extends Fragment {
             DBHelper dbHelper=new DBHelper(getContext());
             FirebaseAuth mAuth=FirebaseAuth.getInstance();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
             Map<String, Integer> datos=new HashMap<>();
-            AtomicReference<String> usuario = null;
-            DocumentReference  docRef = db.collection("users").document(mAuth.getCurrentUser().getEmail());
-            docRef.get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        usuario.set(document.get("name").toString());
-                    }
-                }
-                });
+
             for (int i=0;i<aPlates.size();i++)
             {
                 datos.put(aPlates.get(i).getId(),aPlates.get(i).getAmount());
                 dbHelper.UPDATE_PLATE_BILL(aPlates.get(i).getId(),"activo");
             }
             Map<String, Object> user = new HashMap<>();
-            user.put("name",usuario.get());
+            user.put("name", mAuth.getCurrentUser().getEmail());
             user.put("points", 0);
             user.put("state", "activo");
             user.put("fav-plate", datos);

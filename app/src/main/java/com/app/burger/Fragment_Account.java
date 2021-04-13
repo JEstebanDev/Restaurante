@@ -43,7 +43,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Fragment_Account extends Fragment {
 
     private RecyclerView recycler_fav;
-    private TextView textView;
     private ArrayList<Plates> aUserPlates;
     private PlatesAdapter platesAdapter;
     private DocumentReference docRef;
@@ -66,7 +65,6 @@ public class Fragment_Account extends Fragment {
         recycler_fav.setHasFixedSize(true);
         recycler_fav.setLayoutManager(new GridLayoutManager(getContext(),2));
 
-        textView =view.findViewById(R.id.textView);
 
         consult(currentUser.getEmail());
         return view;
@@ -85,7 +83,6 @@ public class Fragment_Account extends Fragment {
                             document.get("state").toString(),
                             Integer.parseInt(document.get("points").toString()),
                             (Map<String, Integer>) document.get("fav-plate"));
-                    textView.setText("¡Hola "+usuario.getName()+"!");
                     for (Map.Entry<String, Integer> entry : usuario.getFavPlates().entrySet()) {
                         docRef = databaseReference.collection("plates").document(entry.getKey());
                         docRef.get().addOnCompleteListener(task1 -> {

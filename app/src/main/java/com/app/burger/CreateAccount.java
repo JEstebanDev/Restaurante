@@ -81,7 +81,7 @@ public class CreateAccount extends AppCompatActivity{
                 && !strPassword.isEmpty() && !strRepassword.isEmpty()) {
             if (isValidMail(strMail)) {
                 if (strPassword.equals(strRepassword)) {
-                    if(isValidPassword(strPassword)){
+                    if(!isValidPassword(strPassword)){
                         builder.setTitle("Ups!");
                         builder.setMessage("Las contraseña es debil")
                                 .setCancelable(false)
